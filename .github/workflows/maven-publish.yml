@@ -1,11 +1,9 @@
-# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java#apache-maven-with-a-settings-path
-
-name: Maven Package to Unnamed Repo and github packages
+name: Maven Package to Hycraft Nexus
 
 on:
     release:
         types: [created]
+
 jobs:
     publish:
         runs-on: ubuntu-latest
@@ -14,16 +12,16 @@ jobs:
             packages: write
         steps:
             - uses: actions/checkout@v4
-            - name: Set up Java for publishing to unnamed repo
+            - name: Set up Java for publishing to Hycraft Nexus
               uses: actions/setup-java@v3
               with:
                   java-version: '17'
                   distribution: 'temurin'
-                  server-id: unnamed-releases
+                  server-id: hycraft-repo
                   server-username: MAVEN_USERNAME
                   server-password: MAVEN_PASSWORD
-            - name: Publish to unnamed repo
+            - name: Publish to Hycraft Nexus
               run: mvn --batch-mode deploy
               env:
-                  MAVEN_USERNAME: ${{ secrets.USERNAME }}
-                  MAVEN_PASSWORD: ${{ secrets.TOKEN }}
+                  MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+                  MAVEN_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
