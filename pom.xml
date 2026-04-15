@@ -18,13 +18,6 @@
 
     <packaging>pom</packaging>
 
-    <repositories>
-        <repository>
-            <id>hycraft-repo</id>
-            <url>https://repos.hycraft.us/repository/hycraft/</url>
-        </repository>
-    </repositories>
-
     <distributionManagement>
         <snapshotRepository>
             <id>hycraft-repo</id>
