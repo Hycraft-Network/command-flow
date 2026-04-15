@@ -1,8 +1,10 @@
 name: Maven Package to Hycraft Nexus
 
 on:
-    release:
-        types: [created]
+    workflow_dispatch:
+    push:
+        branches:
+            - main
 
 jobs:
     publish:
@@ -21,7 +23,7 @@ jobs:
                   server-username: MAVEN_USERNAME
                   server-password: MAVEN_PASSWORD
             - name: Publish to Hycraft Nexus
-              run: mvn --batch-mode deploy
+              run: mvn --batch-mode deploy -Ppublish
               env:
                   MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
                   MAVEN_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
