@@ -45,6 +45,36 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            <!-- Skip deploying artifacts when running plain 'package' or 'install'
+                 without the NEXUS credentials (e.g. CI build jobs). The deploy
+                 phase is only reached in the maven-publish workflow. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <!-- Override the deploy-plugin skip=true for the publish profile -->
+    <profiles>
+        <profile>
+            <id>publish</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
